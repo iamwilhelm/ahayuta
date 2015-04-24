@@ -1,0 +1,10 @@
+[package]
+
+name = "ahayuta"
+version = "0.0.1"
+authors = [ "Wil Chung <iamwil@gmail.com>" ]
+
+[[bin]]
+
+name = "ahayuta"
+
