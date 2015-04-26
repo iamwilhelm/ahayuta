@@ -1,14 +1,36 @@
 
+/////////////////// Opcodes
+
 enum Opcode {
-    Add,
-    Sub,
-    Mul,
-    Div,
-    Min,
-    Max,
-    Pow,
+    ADD,
+    SUB,
+    MUL,
+    DIV,
+    MIN,
+    MAX,
+    POW,
+
+    ABS,
+    SQUARE,
+    SQRT,
+    SIN,
+    COS,
+    TAN,
+    ASIN,
+    ACOS,
+    ATAN,
+    NEG,
+
+    X,
+    Y,
+    Z,
+    CONST,
+
+    LAST_OP,
 }
 
+
+//////////////////// Results
 
 const MIN_VOLUME:usize = 64;
 
@@ -17,7 +39,6 @@ struct Interval {
     upper: f32,
 }
 
-
 struct Results {
     f: f32,
     i: Interval,
@@ -25,14 +46,15 @@ struct Results {
 }
 
 pub fn fill_results(n: &mut Node, value: f32) {
-    n.results.f = value;
-    n.results.i = Interval { lower: value, upper: value };
+    n.results.f = value.clone();
+    n.results.i = Interval { lower: value.clone(), upper: value.clone() };
 
-    //for q in 0..MIN_VOLUME {
-    //    n.results.r[q] = value;
-    //}
+    for q in 0..MIN_VOLUME {
+        n.results.r[q] = value.clone();
+    }
 }
 
+////////////////////// Node
 
 pub struct Node {
 
@@ -46,7 +68,11 @@ pub struct Node {
     rank: i32,
 
     // flags
-    flags: i8,
+    is_constant: bool,
+    is_ignored: bool,
+    is_boolean: bool,
+    is_in_tree: bool,
+
 
     // left hand side of tree
     lhs: Option<Box<Node>>,
@@ -57,16 +83,16 @@ pub struct Node {
     clone_address: Option<Box<Node>>,
 }
 
+
+
 //pub fn clone_node(n: Node) {
 //}
 
 //fn binary_n() -> Node {
 //}
 
-fn unary_n<F>(arg: Node, func: F, opcode: Opcode) -> Node
+fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
     where F : Fn(f32) -> f32 {
-
-    let constant = 0;
 
     let result = Results {
         f: 0.0,
@@ -74,17 +100,25 @@ fn unary_n<F>(arg: Node, func: F, opcode: Opcode) -> Node
         r: [0.0; MIN_VOLUME],
     };
 
-    let n = Node {
-        opcode: opcode,
+    let mut n = Node {
+        opcode: if arg.is_constant { Opcode::CONST } else { op },
         results: result,
-        rank: 1,
-        flags: 0,
+        rank: if arg.is_constant { 0 } else { arg.rank + 1 },
+
+        is_constant: arg.is_constant.clone(),
+        is_ignored: false,
+        is_boolean: false,
+        is_in_tree: false,
+
         lhs: Option::None,
         rhs: Option::None,
         clone_address: Option::None,
     };
 
-    if (constant != 0) {
+    if arg.is_constant {
+        fill_results(&mut n, func(arg.results.f))
+    } else {
+        n.lhs = Option::Some(Box::new(arg))
     }
 
     n
