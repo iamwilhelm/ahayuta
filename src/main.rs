@@ -1,6 +1,3 @@
-mod english;
-use english::greeting;
-
 mod libfab;
 use libfab::tree::math;
 
