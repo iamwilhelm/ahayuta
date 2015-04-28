@@ -35,11 +35,13 @@ pub enum Opcode {
 
 const MIN_VOLUME:usize = 64;
 
+#[allow(dead_code)]
 struct Interval {
     lower: f32,
     upper: f32,
 }
 
+#[allow(dead_code)]
 struct Results {
     f: f32,
     i: Interval,
@@ -57,6 +59,7 @@ pub fn fill_results(n: &mut Node, value: f32) {
 
 ////////////////////// Node
 
+#[allow(dead_code)]
 pub struct Node {
 
     // Node operation
