@@ -86,15 +86,15 @@ pub fn neg_f(a: f32) -> f32 {
 
 //////////////// access
 
-pub fn X_f(x: f32) -> f32 {
+pub fn x_f(x: f32) -> f32 {
     x
 }
 
-pub fn Y_f(y: f32) -> f32 {
+pub fn y_f(y: f32) -> f32 {
     y
 }
 
-pub fn Z_f(z: f32) -> f32 {
+pub fn z_f(z: f32) -> f32 {
     z
 }
 

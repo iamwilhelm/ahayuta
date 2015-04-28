@@ -1,32 +1,33 @@
+use libfab::tree::math;
 
 /////////////////// Opcodes
 
 enum Opcode {
-    ADD,
-    SUB,
-    MUL,
-    DIV,
-    MIN,
-    MAX,
-    POW,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Min,
+    Max,
+    Pow,
 
-    ABS,
-    SQUARE,
-    SQRT,
-    SIN,
-    COS,
-    TAN,
-    ASIN,
-    ACOS,
-    ATAN,
-    NEG,
+    Abs,
+    Square,
+    Sqrt,
+    Sin,
+    Cos,
+    Tan,
+    ArcSin,
+    ArcCos,
+    ArcTan,
+    Neg,
 
     X,
     Y,
     Z,
-    CONST,
+    Const,
 
-    LAST_OP,
+    LastOP,
 }
 
 
@@ -101,7 +102,7 @@ fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
     };
 
     let mut n = Node {
-        opcode: if arg.is_constant { Opcode::CONST } else { op },
+        opcode: if arg.is_constant { Opcode::Const } else { op },
         results: result,
         rank: if arg.is_constant { 0 } else { arg.rank + 1 },
 
@@ -123,3 +124,15 @@ fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
 
     n
 }
+
+pub fn abs_n(child: Node) -> Node { unary_n(child, math::abs_f, Opcode::Abs) }
+pub fn square_n(child: Node) -> Node { unary_n(child, math::square_f, Opcode::Square) }
+pub fn sqrt_n(child: Node) -> Node { unary_n(child, math::sqrt_f, Opcode::Sqrt) }
+pub fn sin_n(child: Node) -> Node { unary_n(child, math::sin_f, Opcode::Sin) }
+pub fn cos_n(child: Node) -> Node { unary_n(child, math::cos_f, Opcode::Cos) }
+pub fn tan_n(child: Node) -> Node { unary_n(child, math::tan_f, Opcode::Tan) }
+pub fn asin_n(child: Node) -> Node { unary_n(child, math::asin_f, Opcode::ArcSin) }
+pub fn acos_n(child: Node) -> Node { unary_n(child, math::acos_f, Opcode::ArcCos) }
+pub fn atan_n(child: Node) -> Node { unary_n(child, math::atan_f, Opcode::ArcTan) }
+pub fn neg_n(child: Node) -> Node { unary_n(child, math::neg_f, Opcode::Neg) }
+

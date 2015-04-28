@@ -1,4 +1,4 @@
-mod libfab;
+pub mod libfab;
 use libfab::tree::math;
 
 fn main() {
