@@ -2,7 +2,7 @@ use libfab::tree::math;
 
 /////////////////// Opcodes
 
-enum Opcode {
+pub enum Opcode {
     Add,
     Sub,
     Mul,
@@ -89,8 +89,71 @@ pub struct Node {
 //pub fn clone_node(n: Node) {
 //}
 
-//fn binary_n() -> Node {
-//}
+fn binary_n<F>(lhs: Node, rhs: Node, func: F, op: Opcode) -> Node 
+    where F : Fn(f32, f32) -> f32 {
+
+    let is_const = lhs.is_constant && rhs.is_constant;
+    
+    let result = Results {
+        f: 0.0,
+        i: Interval { lower: 0.0, upper: 1.0 },
+        r: [0.0; MIN_VOLUME],
+    };
+
+    let mut n = Node {
+        opcode: if is_const { Opcode::Const } else { op },
+        results: result,
+        rank: if is_const {
+            0
+        } else {
+            if lhs.rank > rhs.rank {
+                1 + lhs.rank
+            } else {
+                1 + rhs.rank
+            }
+        },
+
+        is_constant: is_const.clone(),
+        is_ignored: false,
+        is_boolean: false,
+        is_in_tree: false,
+
+        lhs: Option::None,
+        rhs: Option::None,
+        clone_address: Option::None
+    };
+
+    if is_const {
+        fill_results(&mut n, func(lhs.results.f, rhs.results.f));
+    } else {
+        n.lhs = Option::Some(Box::new(lhs));
+        n.rhs = Option::Some(Box::new(rhs));
+    }
+
+    n
+}
+
+pub fn add_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::add_f, Opcode::Add)
+}
+pub fn sub_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::sub_f, Opcode::Sub)
+}
+pub fn mul_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::mul_f, Opcode::Mul)
+}
+pub fn div_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::div_f, Opcode::Div)
+}
+pub fn min_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::min_f, Opcode::Min)
+}
+pub fn max_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::max_f, Opcode::Max)
+}
+pub fn pow_n(lhs: Node, rhs: Node) -> Node {
+    binary_n(lhs, rhs, math::pow_f, Opcode::Pow)
+}
 
 fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
     where F : Fn(f32) -> f32 {
