@@ -1,5 +1,19 @@
 use libfab::tree::math;
 
+/////////////////// Switches
+
+/// The minimum volume for interval evaluation
+const MIN_VOLUME:usize = 64;
+
+/// Remove duplicate nodes when combining MathTrees
+const DEDUPLICATE:bool = true;
+
+/// Deactivate inactive tree branches
+const PRUNE:bool = true;
+
+/// Print debug data
+const DEBUG:bool = false;
+
 /////////////////// Opcodes
 
 pub enum Opcode {
