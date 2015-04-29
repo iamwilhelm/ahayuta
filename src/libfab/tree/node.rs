@@ -76,13 +76,13 @@ pub fn fill_results(n: &mut Node, value: f32) {
 #[allow(dead_code)]
 pub struct Node {
 
-    // Node operation
+    /// Node operation
     opcode: Opcode,
 
-    // Saved results from the most recent evaluation
+    /// Saved results from the most recent evaluation
     results: Results,
 
-    // rank of the node in the tree
+    /// rank of the node in the tree
     rank: i32,
 
     // flags
@@ -205,6 +205,13 @@ fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
     n
 }
 
+/// Creates absolute value node
+///
+/// # Examples
+///
+/// ```
+/// assert_eq!(3, 2);
+/// ```
 pub fn abs_n(child: Node) -> Node { unary_n(child, math::abs_f, Opcode::Abs) }
 pub fn square_n(child: Node) -> Node { unary_n(child, math::square_f, Opcode::Square) }
 pub fn sqrt_n(child: Node) -> Node { unary_n(child, math::sqrt_f, Opcode::Sqrt) }
@@ -216,3 +223,15 @@ pub fn acos_n(child: Node) -> Node { unary_n(child, math::acos_f, Opcode::ArcCos
 pub fn atan_n(child: Node) -> Node { unary_n(child, math::atan_f, Opcode::ArcTan) }
 pub fn neg_n(child: Node) -> Node { unary_n(child, math::neg_f, Opcode::Neg) }
 
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn binary_n() {
+    }
+
+    #[test]
+    fn unary_n() {
+    }
+}
