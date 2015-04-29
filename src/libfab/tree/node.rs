@@ -44,10 +44,41 @@ pub enum Opcode {
     LastOP,
 }
 
+impl Opcode {
+    pub fn clone(&self) -> Opcode {
+        match *self {
+            Opcode::Add => Opcode::Add,
+            Opcode::Sub => Opcode::Sub,
+            Opcode::Mul => Opcode::Mul,
+            Opcode::Div => Opcode::Div,
+            Opcode::Min => Opcode::Min,
+            Opcode::Max => Opcode::Max,
+            Opcode::Pow => Opcode::Pow,
+
+            Opcode::Abs => Opcode::Abs,
+            Opcode::Square => Opcode::Square,
+            Opcode::Sqrt => Opcode::Sqrt,
+            Opcode::Sin => Opcode::Sin,
+            Opcode::Cos => Opcode::Cos,
+            Opcode::Tan => Opcode::Pow,
+            Opcode::ArcSin => Opcode::ArcSin,
+            Opcode::ArcCos => Opcode::ArcCos,
+            Opcode::ArcTan => Opcode::ArcTan,
+            Opcode::Neg => Opcode::Neg,
+
+            Opcode::X => Opcode::X,
+            Opcode::Y => Opcode::Y,
+            Opcode::Z => Opcode::Z,
+            Opcode::Const => Opcode::Const,
+
+            Opcode::LastOP => Opcode::LastOP,
+        }
+    }
+}
+
 
 //////////////////// Results
 
-const MIN_VOLUME:usize = 64;
 
 #[allow(dead_code)]
 struct Interval {
@@ -55,11 +86,37 @@ struct Interval {
     upper: f32,
 }
 
+impl Interval {
+    pub fn clone(&self) -> Interval {
+        Interval {
+            lower: self.lower.clone(),
+            upper: self.upper.clone(),
+        }
+    }
+}
+
 #[allow(dead_code)]
 struct Results {
     f: f32,
     i: Interval,
     r: [f32; MIN_VOLUME],
+}
+
+impl Results {
+    pub fn clone(&self) -> Results {
+        let mut results = Results {
+            f: self.f.clone(),
+            i: self.i.clone(),
+            r: [0.0; MIN_VOLUME],
+        };
+
+        // because I don't know how to clone arrays
+        for i in 0..MIN_VOLUME {
+            results.r[i] = self.r[i];
+        }
+
+        results
+    }
 }
 
 pub fn fill_results(n: &mut Node, value: f32) {
@@ -101,10 +158,38 @@ pub struct Node {
     clone_address: Option<Box<Node>>,
 }
 
+impl Node {
+    pub fn clone(&self) -> Node {
+        let mut clone = Node {
+            opcode: self.opcode.clone(),
+            results: self.results.clone(),
 
+            rank: self.rank.clone(),
 
-//pub fn clone_node(n: Node) {
-//}
+            is_constant: self.is_constant.clone(),
+            is_ignored: self.is_ignored.clone(),
+            is_boolean: self.is_boolean.clone(),
+            is_in_tree: self.is_in_tree.clone(),
+
+            lhs: Option::None,
+            rhs: Option::None,
+
+            clone_address: Option::None,
+        };
+
+        match self.lhs {
+            Some(ref left) => clone.lhs = Option::Some(Box::new((*left).clone())),
+            _ => {},
+        };
+
+        match self.rhs {
+            Some(ref right) => clone.rhs = Option::Some(Box::new((*right).clone())),
+            _ => {},
+        };
+
+        clone
+    }
+}
 
 fn binary_n<F>(lhs: Node, rhs: Node, func: F, op: Opcode) -> Node 
     where F : Fn(f32, f32) -> f32 {
