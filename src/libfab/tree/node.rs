@@ -311,9 +311,64 @@ pub fn acos_n(child: Node) -> Node { unary_n(child, math::acos_f, Opcode::ArcCos
 pub fn atan_n(child: Node) -> Node { unary_n(child, math::atan_f, Opcode::ArcTan) }
 pub fn neg_n(child: Node) -> Node { unary_n(child, math::neg_f, Opcode::Neg) }
 
+pub fn noary_n(opcode: Opcode) -> Node {
+    let interval = Interval {
+        lower: 0.0,
+        upper: 0.0,
+    };
+
+    let results = Results {
+        f: 0.0,
+        i: interval,
+        r: [0.0; MIN_VOLUME],
+    };
+
+    Node {
+        opcode: opcode,
+        rank: 0,
+        results: results,
+
+        is_constant: false,
+        is_ignored: false,
+        is_boolean: false,
+        is_in_tree: false,
+
+        lhs: Option::None,
+        rhs: Option::None,
+        clone_address: Option::None,
+    }
+}
+
+pub fn constant_n(value: f32) -> Node {
+    let mut n = noary_n(Opcode::Const);
+    n.is_constant = true;
+    fill_results(&mut n, value);
+
+    n
+}
+
+pub fn x_n() -> Node {
+    noary_n(Opcode::X)
+}
+
+pub fn y_n() -> Node {
+    noary_n(Opcode::Y)
+}
+
+pub fn z_n() -> Node {
+    noary_n(Opcode::Z)
+}
+
+
 #[cfg(test)]
 mod test {
     use super::*;
+
+    #[test]
+    fn x_n_test() {
+        let node = x_n();
+        //assert_eq!(node.opcode, Opcode::X);
+    }
 
     #[test]
     fn abs_n_test() {
