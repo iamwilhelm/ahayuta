@@ -6,12 +6,15 @@ use libfab::tree::math;
 const MIN_VOLUME:usize = 64;
 
 /// Remove duplicate nodes when combining MathTrees
+#[allow(dead_code)]
 const DEDUPLICATE:bool = true;
 
 /// Deactivate inactive tree branches
+#[allow(dead_code)]
 const PRUNE:bool = true;
 
 /// Print debug data
+#[allow(dead_code)]
 const DEBUG:bool = false;
 
 /////////////////// Opcodes
@@ -313,10 +316,10 @@ mod test {
     use super::*;
 
     #[test]
-    fn binary_n() {
+    fn abs_n_test() {
     }
 
     #[test]
-    fn unary_n() {
+    fn square_n_test() {
     }
 }
