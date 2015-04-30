@@ -192,6 +192,238 @@ impl Node {
 
         clone
     }
+
+    pub fn print(&self) {
+        match self.opcode {
+            Opcode::Add => {
+                print!("(");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(" ^ ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(")");
+            }
+            Opcode::Sub => {
+                print!("(");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(" ^ ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(")");
+            }
+            Opcode::Mul => {
+                print!("(");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(" ^ ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(")");
+            }
+            Opcode::Div => {
+                print!("(");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(" ^ ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(")");
+            }
+            Opcode::Min => {
+                print!("min[");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(", ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!("]");
+            }
+            Opcode::Max => {
+                print!("max[");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(", ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!("]");
+            }
+            Opcode::Pow => {
+                print!("(");
+                match self.lhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(" ^ ");
+                match self.rhs {
+                    Some(ref node) => {
+                        node.print();
+                    },
+                    _ => { },
+                }
+                print!(")");
+            }
+
+            Opcode::Abs => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("abs(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Square => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("square(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Sqrt => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("sqrt(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Sin => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("sin(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Cos => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("cos(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Tan => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("tan(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::ArcSin => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("arcsin(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::ArcCos => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("arccos(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::ArcTan => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("arctan(");
+                        node.print();
+                        print!(")");
+                    },
+                    _ => { },
+                }
+            },
+            Opcode::Neg => {
+                match self.lhs {
+                    Some(ref node) => {
+                        print!("-");
+                        node.print();
+                    },
+                    _ => { },
+                }
+            },
+
+            Opcode::X => { print!("X"); },
+            Opcode::Y => { print!("Y"); },
+            Opcode::Z => { print!("Z"); },
+            Opcode::Const => { print!("{}", self.results.f); },
+            _ => {
+                print!(" ");
+            },
+        }
+    }
 }
 
 fn binary_n<F>(lhs: Node, rhs: Node, func: F, op: Opcode) -> Node 
