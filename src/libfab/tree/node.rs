@@ -619,9 +619,59 @@ mod test {
     }
 
     #[test]
-    fn x_n_test() {
-        let node = x_n();
-        assert_eq!(Opcode::X, node.opcode);
+    fn sqrt_n_test() {
+        let x_node = x_n();
+        let sqrt_node = sqrt_n(x_node);
+        assert_eq!(Opcode::Sqrt, sqrt_node.opcode);
+    }
+
+    #[test]
+    fn sin_n_test() {
+        let x_node = x_n();
+        let sin_node = sin_n(x_node);
+        assert_eq!(Opcode::Sin, sin_node.opcode);
+    }
+
+    #[test]
+    fn cos_n_test() {
+        let x_node = x_n();
+        let cos_node = cos_n(x_node);
+        assert_eq!(Opcode::Cos, cos_node.opcode);
+    }
+
+    #[test]
+    fn tan_n_test() {
+        let x_node = x_n();
+        let tan_node = tan_n(x_node);
+        assert_eq!(Opcode::Tan, tan_node.opcode);
+    }
+
+    #[test]
+    fn asin_n_test() {
+        let x_node = x_n();
+        let asin_node = asin_n(x_node);
+        assert_eq!(Opcode::ArcSin, asin_node.opcode);
+    }
+
+    #[test]
+    fn acos_n_test() {
+        let x_node = x_n();
+        let acos_node = acos_n(x_node);
+        assert_eq!(Opcode::ArcCos, acos_node.opcode);
+    }
+
+    #[test]
+    fn atan_n_test() {
+        let x_node = x_n();
+        let atan_node = atan_n(x_node);
+        assert_eq!(Opcode::ArcTan, atan_node.opcode);
+    }
+
+    #[test]
+    fn neg_n_test() {
+        let x_node = x_n();
+        let neg_node = neg_n(x_node);
+        assert_eq!(Opcode::Neg, neg_node.opcode);
     }
 
     #[test]
@@ -629,5 +679,24 @@ mod test {
         let node = constant_n(2.0);
         assert_eq!(Opcode::Constant, node.opcode);
     }
+
+    #[test]
+    fn x_n_test() {
+        let node = x_n();
+        assert_eq!(Opcode::X, node.opcode);
+    }
+
+    #[test]
+    fn y_n_test() {
+        let node = y_n();
+        assert_eq!(Opcode::Y, node.opcode);
+    }
+
+    #[test]
+    fn z_n_test() {
+        let node = z_n();
+        assert_eq!(Opcode::Z, node.opcode);
+    }
+
 
 }
