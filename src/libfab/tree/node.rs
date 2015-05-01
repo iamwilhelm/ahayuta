@@ -42,7 +42,7 @@ pub enum Opcode {
     X,
     Y,
     Z,
-    Const,
+    Constant,
 
     LastOP,
 }
@@ -72,7 +72,7 @@ impl Opcode {
             Opcode::X => Opcode::X,
             Opcode::Y => Opcode::Y,
             Opcode::Z => Opcode::Z,
-            Opcode::Const => Opcode::Const,
+            Opcode::Constant => Opcode::Constant,
 
             Opcode::LastOP => Opcode::LastOP,
         }
@@ -418,7 +418,7 @@ impl Node {
             Opcode::X => { print!("X"); },
             Opcode::Y => { print!("Y"); },
             Opcode::Z => { print!("Z"); },
-            Opcode::Const => { print!("{}", self.results.f); },
+            Opcode::Constant => { print!("{}", self.results.f); },
             _ => {
                 print!(" ");
             },
@@ -438,7 +438,7 @@ fn binary_n<F>(lhs: Node, rhs: Node, func: F, op: Opcode) -> Node
     };
 
     let mut n = Node {
-        opcode: if is_const { Opcode::Const } else { op },
+        opcode: if is_const { Opcode::Constant } else { op },
         results: result,
         rank: if is_const {
             0
@@ -502,7 +502,7 @@ fn unary_n<F>(arg: Node, func: F, op: Opcode) -> Node
     };
 
     let mut n = Node {
-        opcode: if arg.is_constant { Opcode::Const } else { op },
+        opcode: if arg.is_constant { Opcode::Constant } else { op },
         results: result,
         rank: if arg.is_constant { 0 } else { arg.rank + 1 },
 
@@ -572,7 +572,7 @@ pub fn noary_n(opcode: Opcode) -> Node {
 }
 
 pub fn constant_n(value: f32) -> Node {
-    let mut n = noary_n(Opcode::Const);
+    let mut n = noary_n(Opcode::Constant);
     n.is_constant = true;
     fill_results(&mut n, value);
 
