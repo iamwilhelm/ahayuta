@@ -19,6 +19,7 @@ const DEBUG:bool = false;
 
 /////////////////// Opcodes
 
+#[derive(PartialEq, Debug)]
 pub enum Opcode {
     Add,
     Sub,
@@ -609,4 +610,17 @@ mod test {
     #[test]
     fn square_n_test() {
     }
+
+    #[test]
+    fn x_n_test() {
+        let node = x_n();
+        assert_eq!(Opcode::X, node.opcode);
+    }
+
+    #[test]
+    fn constant_n_test() {
+        let node = constant_n(2.0);
+        assert_eq!(Opcode::Constant, node.opcode);
+    }
+
 }
