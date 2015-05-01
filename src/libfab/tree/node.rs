@@ -598,6 +598,70 @@ mod test {
     use super::*;
 
     #[test]
+    fn binary_n_constant_test() {
+        let a_node = constant_n(1.0);
+        let b_node = constant_n(2.0);
+        let add_node = add_n(a_node, b_node);
+        assert_eq!(Opcode::Constant, add_node.opcode);
+    }
+
+    #[test]
+    fn add_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let add_node = add_n(x, y);
+        assert_eq!(Opcode::Add, add_node.opcode);
+    }
+
+    #[test]
+    fn sub_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let sub_node = sub_n(x, y);
+        assert_eq!(Opcode::Sub, sub_node.opcode);
+    }
+
+    #[test]
+    fn mul_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let mul_node = mul_n(x, y);
+        assert_eq!(Opcode::Mul, mul_node.opcode);
+    }
+
+    #[test]
+    fn div_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let div_node = div_n(x, y);
+        assert_eq!(Opcode::Div, div_node.opcode);
+    }
+
+    #[test]
+    fn min_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let min_node = min_n(x, y);
+        assert_eq!(Opcode::Min, min_node.opcode);
+    }
+
+    #[test]
+    fn max_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let max_node = max_n(x, y);
+        assert_eq!(Opcode::Max, max_node.opcode);
+    }
+
+    #[test]
+    fn pow_n_test() {
+        let x = x_n();
+        let y = y_n();
+        let pow_node = pow_n(x, y);
+        assert_eq!(Opcode::Pow, pow_node.opcode);
+    }
+
+    #[test]
     fn unary_n_constant_test() {
         let const_node = constant_n(2.0);
         let abs_node = abs_n(const_node);
