@@ -203,7 +203,7 @@ impl Node {
                     },
                     _ => { },
                 }
-                print!(" ^ ");
+                print!(" + ");
                 match self.rhs {
                     Some(ref node) => {
                         node.print();
@@ -220,7 +220,7 @@ impl Node {
                     },
                     _ => { },
                 }
-                print!(" ^ ");
+                print!(" - ");
                 match self.rhs {
                     Some(ref node) => {
                         node.print();
@@ -237,7 +237,7 @@ impl Node {
                     },
                     _ => { },
                 }
-                print!(" ^ ");
+                print!(" * ");
                 match self.rhs {
                     Some(ref node) => {
                         node.print();
@@ -254,7 +254,7 @@ impl Node {
                     },
                     _ => { },
                 }
-                print!(" ^ ");
+                print!(" / ");
                 match self.rhs {
                     Some(ref node) => {
                         node.print();
