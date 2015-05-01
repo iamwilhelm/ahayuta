@@ -598,17 +598,24 @@ mod test {
     use super::*;
 
     #[test]
-    fn x_n_test() {
-        let node = x_n();
-        //assert_eq!(node.opcode, Opcode::X);
+    fn unary_n_constant_test() {
+        let const_node = constant_n(2.0);
+        let abs_node = abs_n(const_node);
+        assert_eq!(Opcode::Constant, abs_node.opcode);
     }
 
     #[test]
     fn abs_n_test() {
+        let x_node = x_n();
+        let abs_node = abs_n(x_node);
+        assert_eq!(Opcode::Abs, abs_node.opcode);
     }
 
     #[test]
     fn square_n_test() {
+        let x_node = x_n();
+        let square_node = square_n(x_node);
+        assert_eq!(Opcode::Square, square_node.opcode);
     }
 
     #[test]
